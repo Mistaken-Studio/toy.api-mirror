@@ -18,7 +18,7 @@ namespace Mistaken.Toy.API.Components.Synchronizers
     {
         internal MeshRenderer MeshRenderer { get; set; } = null;
 
-        internal bool SyncColor => !(this.MeshRenderer is null);
+        internal bool SyncColor => this.MeshRenderer is not null;
 
         internal void ShowFor(Player player)
         {
@@ -66,7 +66,7 @@ namespace Mistaken.Toy.API.Components.Synchronizers
         {
             var tor = base.GetStateFlags(playerState);
 
-            if (!(playerState is PrimitiveState state))
+            if (playerState is not PrimitiveState state)
                 throw new ArgumentException($"Supplied {nameof(playerState)} was not {nameof(PrimitiveState)}, it was {playerState?.GetType().FullName ?? "NULL"}", nameof(playerState));
 
             if (this.SyncColor && this.currentPrimitiveState.Color != state.Color) tor += 32;
@@ -89,10 +89,10 @@ namespace Mistaken.Toy.API.Components.Synchronizers
         {
             base.ResetState(state);
 
-            if (!(state is PrimitiveState primitiveState))
+            if (state is not PrimitiveState primitiveState)
                 throw new ArgumentException($"Expected {nameof(PrimitiveState)} but got {state.GetType().Name}", nameof(state));
 
-            if (!(this.Toy is PrimitiveObjectToy primitiveObjectToy))
+            if (this.Toy is not PrimitiveObjectToy primitiveObjectToy)
                 throw new ArgumentException($"Expected {nameof(PrimitiveObjectToy)} but got {this.Toy.GetType().Name}", nameof(this.Toy));
 
             primitiveState.Color = primitiveObjectToy.NetworkMaterialColor;
@@ -122,14 +122,14 @@ namespace Mistaken.Toy.API.Components.Synchronizers
             {
                 base.CopyValues(other);
 
-                if (!(other is PrimitiveState primitive))
+                if (other is not PrimitiveState primitive)
                     throw new ArgumentException("Expected argument of type " + nameof(PrimitiveState), nameof(other));
 
                 primitive.Color = this.Color;
             }
         }
 
-        private readonly PrimitiveState currentPrimitiveState = new PrimitiveState();
-        private readonly HashSet<Player> visibleFor = new HashSet<Player>();
+        private readonly PrimitiveState currentPrimitiveState = new();
+        private readonly HashSet<Player> visibleFor = new();
     }
 }

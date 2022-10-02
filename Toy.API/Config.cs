@@ -4,8 +4,10 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using Mistaken.Updater.Config;
 using System.ComponentModel;
+using Mistaken.Updater.Config;
+
+#pragma warning disable CS0618
 
 namespace Mistaken.Toy.API
 {
@@ -19,7 +21,7 @@ namespace Mistaken.Toy.API
         /// Gets or sets a value indicating whether debug should be displayed.
         /// </summary>
         [Description("If true then debug will be displayed")]
-        public bool VerbouseOutput { get; set; }
+        public bool VerboseOutput { get; set; }
 
         /// <inheritdoc/>
         [Description("Auto Update Settings")]

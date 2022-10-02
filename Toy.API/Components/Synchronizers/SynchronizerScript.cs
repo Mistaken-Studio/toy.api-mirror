@@ -55,7 +55,7 @@ namespace Mistaken.Toy.API.Components.Synchronizers
         }
 
         protected static readonly MethodInfo MakeCustomSyncWriter;
-        protected readonly Dictionary<Player, State> LastStates = new Dictionary<Player, State>();
+        protected readonly Dictionary<Player, State> LastStates = new();
 
         protected Type ToyType => this.Toy.GetType();
 
@@ -191,7 +191,7 @@ namespace Mistaken.Toy.API.Components.Synchronizers
             public Vector3 Scale { get; set; }
 
             public virtual bool Equals(State other)
-                => !(other is null) &&
+                => other is not null &&
                    this.Position.Equals(other.Position) &&
                    this.Rotation.Equals(other.Rotation) &&
                    this.Scale.Equals(other.Scale);

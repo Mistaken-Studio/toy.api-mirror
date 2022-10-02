@@ -10,10 +10,6 @@ using Exiled.API.Features;
 using Mistaken.Toy.API.Components.Synchronizers;
 using UnityEngine;
 
-#pragma warning disable SA1401 // Fields should be private
-
-// ReSharper disable UnusedMember.Local
-// ReSharper disable once IdentifierTypo
 namespace Mistaken.Toy.API.Components.Controllers
 {
     internal class SynchronizerControllerScript : MonoBehaviour
@@ -25,7 +21,7 @@ namespace Mistaken.Toy.API.Components.Controllers
 
             this.subscribers.Add(player);
 
-            foreach (var primitiveSynchronizerScript in this.SynchronizerScripts.OfType<PrimitiveSynchronizerScript>())
+            foreach (var primitiveSynchronizerScript in this.synchronizerScripts.OfType<PrimitiveSynchronizerScript>())
             {
                 try
                 {
@@ -38,7 +34,7 @@ namespace Mistaken.Toy.API.Components.Controllers
                 }
             }
 
-            foreach (var synchronizerScript in this.SynchronizerScripts.Where(x => !(x is PrimitiveSynchronizerScript)))
+            foreach (var synchronizerScript in this.synchronizerScripts.Where(x => x is not PrimitiveSynchronizerScript))
             {
                 try
                 {
@@ -55,7 +51,7 @@ namespace Mistaken.Toy.API.Components.Controllers
         {
             this.subscribers.Remove(player);
 
-            foreach (var primitiveSynchronizerScript in this.SynchronizerScripts.OfType<PrimitiveSynchronizerScript>())
+            foreach (var primitiveSynchronizerScript in this.synchronizerScripts.OfType<PrimitiveSynchronizerScript>())
             {
                 try
                 {
@@ -67,7 +63,7 @@ namespace Mistaken.Toy.API.Components.Controllers
                 }
             }
 
-            foreach (var lightSynchronizerScript in this.SynchronizerScripts.OfType<LightSynchronizerScript>())
+            foreach (var lightSynchronizerScript in this.synchronizerScripts.OfType<LightSynchronizerScript>())
             {
                 try
                 {
@@ -80,28 +76,25 @@ namespace Mistaken.Toy.API.Components.Controllers
             }
         }
 
-        public bool IsSubscriber(Player player)
-            => this.subscribers.Contains(player);
-
         public virtual IEnumerable<Player> GetSubscribers()
             => this.subscribers;
 
         public void SyncFor(Player player)
-            => this.SynchronizerScripts.ForEach(x => x.UpdateSubscriber(player));
+            => this.synchronizerScripts.ForEach(x => x.UpdateSubscriber(player));
 
         internal virtual void AddScript(SynchronizerScript script)
         {
-            this.SynchronizerScripts.Add(script);
+            this.synchronizerScripts.Add(script);
             script.Controller = this;
         }
 
         internal virtual void RemoveScript(SynchronizerScript script)
         {
-            this.SynchronizerScripts.Remove(script);
+            this.synchronizerScripts.Remove(script);
         }
 
-        protected readonly List<SynchronizerScript> SynchronizerScripts = new List<SynchronizerScript>();
+        private readonly List<SynchronizerScript> synchronizerScripts = new();
 
-        private readonly HashSet<Player> subscribers = new HashSet<Player>();
+        private readonly HashSet<Player> subscribers = new();
     }
 }

@@ -4,9 +4,9 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using System;
 using Exiled.API.Enums;
 using Exiled.API.Features;
-using System;
 using Mistaken.API.Diagnostics;
 
 namespace Mistaken.Toy.API
@@ -27,13 +27,13 @@ namespace Mistaken.Toy.API
         public override PluginPriority Priority => PluginPriority.Higher - 1;
 
         /// <inheritdoc/>
-        public override Version RequiredExiledVersion => new Version(5, 2, 0);
+        public override Version RequiredExiledVersion => new (5, 2, 0);
 
         /// <inheritdoc/>
         public override void OnEnabled()
         {
             Instance = this;
-            
+
             Module.RegisterHandler<ToyHandler>(this);
 
             Module.OnEnable(this);

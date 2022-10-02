@@ -10,8 +10,6 @@ using Exiled.API.Features;
 using Mirror;
 using UnityEngine;
 
-#pragma warning disable SA1118 // Parameter should not span multiple lines
-
 // ReSharper disable UnusedMember.Local
 // ReSharper disable CompareOfFloatsByEqualityOperator
 // ReSharper disable NonReadonlyMemberInGetHashCode
@@ -76,7 +74,7 @@ namespace Mistaken.Toy.API.Components.Synchronizers
         {
             var tor = base.GetStateFlags(playerState);
 
-            if (!(playerState is LightState state))
+            if (playerState is not LightState state)
                 throw new ArgumentException($"Supplied {nameof(playerState)} was not {nameof(LightState)}, it was {playerState?.GetType().FullName ?? "NULL"}", nameof(playerState));
 
             if (!this.Light.enabled && this.Light.intensity != 0)
@@ -107,10 +105,10 @@ namespace Mistaken.Toy.API.Components.Synchronizers
         {
             base.ResetState(state);
 
-            if (!(state is LightState lightState))
+            if (state is not LightState lightState)
                 throw new ArgumentException($"Expected {nameof(LightState)} but got {state.GetType().Name}", nameof(state));
 
-            if (!(this.Toy is LightSourceToy lightSourceToy))
+            if (this.Toy is not LightSourceToy lightSourceToy)
                 throw new ArgumentException($"Expected {nameof(LightSourceToy)} but got {this.Toy.GetType().Name}", nameof(this.Toy));
 
             lightState.Intensity = lightSourceToy.NetworkLightIntensity;
@@ -155,7 +153,7 @@ namespace Mistaken.Toy.API.Components.Synchronizers
             {
                 base.CopyValues(other);
 
-                if (!(other is LightState primitive))
+                if (other is not LightState primitive)
                     throw new ArgumentException("Expected argument of type " + nameof(LightState), nameof(other));
 
                 primitive.Color = this.Color;
@@ -165,7 +163,7 @@ namespace Mistaken.Toy.API.Components.Synchronizers
             }
         }
 
-        private readonly LightState currentLightState = new LightState();
+        private readonly LightState currentLightState = new();
         private Light clonedLight;
 
         private Light Light => this.ClonedLight ?? (this.Toy as LightSourceToy)?._light;
