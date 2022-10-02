@@ -7,10 +7,11 @@
 using System.Collections.Generic;
 using System.Reflection.Emit;
 using HarmonyLib;
+using JetBrains.Annotations;
 
 namespace Mistaken.Toy.API.Patch
 {
-    // ReSharper disable UnusedMember.Global
+    [UsedImplicitly]
     [HarmonyPatch(typeof(AdminToys.AdminToyBase), nameof(AdminToys.AdminToyBase.LateUpdate))]
     internal static class ToysPositionSyncOptimizationPatch
     {

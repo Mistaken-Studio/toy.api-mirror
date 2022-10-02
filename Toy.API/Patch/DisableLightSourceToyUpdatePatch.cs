@@ -7,10 +7,11 @@
 using System.Collections.Generic;
 using System.Reflection.Emit;
 using HarmonyLib;
+using JetBrains.Annotations;
 
 namespace Mistaken.Toy.API.Patch
 {
-    // ReSharper disable UnusedMember.Global
+    [UsedImplicitly]
     [HarmonyPatch(typeof(AdminToys.LightSourceToy), nameof(AdminToys.LightSourceToy.Update))]
     internal static class DisableLightSourceToyUpdatePatch
     {

@@ -243,9 +243,23 @@ namespace Mistaken.Toy.API
             Exiled.Events.Handlers.Scp079.ChangingCamera -= this.Scp079_ChangingCamera;
         }
 
+        [UsedImplicitly]
         internal static readonly HashSet<AdminToyBase> ManagedToys = new();
 
-        internal static PrimitiveObjectToy PrimitiveBaseObject
+        private static readonly Dictionary<Room, SynchronizerControllerScript> Controllers = new();
+
+        private static readonly Dictionary<Player, Room> LastRooms = new();
+
+        private static GlobalSynchronizerControllerScript globalController;
+
+        private static LightSourceToy primitiveBaseLight;
+        private static PrimitiveObjectToy primitiveBaseObject;
+
+        private static ShootingTarget shootingTargetObjectBinary;
+        private static ShootingTarget shootingTargetObjectSport;
+        private static ShootingTarget shootingTargetObjectDboy;
+
+        private static PrimitiveObjectToy PrimitiveBaseObject
         {
             get
             {
@@ -262,7 +276,7 @@ namespace Mistaken.Toy.API
             }
         }
 
-        internal static LightSourceToy PrimitiveBaseLight
+        private static LightSourceToy PrimitiveBaseLight
         {
             get
             {
@@ -278,19 +292,6 @@ namespace Mistaken.Toy.API
                 return primitiveBaseLight;
             }
         }
-
-        private static readonly Dictionary<Room, SynchronizerControllerScript> Controllers = new();
-
-        private static readonly Dictionary<Player, Room> LastRooms = new();
-
-        private static GlobalSynchronizerControllerScript globalController;
-
-        private static LightSourceToy primitiveBaseLight;
-        private static PrimitiveObjectToy primitiveBaseObject;
-
-        private static ShootingTarget shootingTargetObjectBinary;
-        private static ShootingTarget shootingTargetObjectSport;
-        private static ShootingTarget shootingTargetObjectDboy;
 
         private static ShootingTarget ShootingTargetObjectBinary
         {
