@@ -44,7 +44,7 @@ namespace Mistaken.Toy.API
         {
             var toy = SpawnBase(PrimitiveBaseObject, parent, movementSmoothing);
 
-            var primitiveObjectToy = InitializePrimitive(toy, type, color, parent.transform.localScale.x > 0 ? (bool?)hasCollision : null, syncPosition, meshRenderer);
+            var primitiveObjectToy = InitializePrimitive(toy, type, color, parent.transform.localScale.x > 0 ? hasCollision : null, syncPosition, meshRenderer);
 
             FinishSpawningToy(toy);
 
@@ -164,23 +164,16 @@ namespace Mistaken.Toy.API
         /// <exception cref="ArgumentException">Thrown when mesh name is not recognized.</exception>
         public static PrimitiveType GetPrimitiveType(MeshFilter filter)
         {
-            switch (filter.mesh.name)
+            return filter.mesh.name switch
             {
-                case "Plane Instance":
-                    return PrimitiveType.Plane;
-                case "Cylinder Instance":
-                    return PrimitiveType.Cylinder;
-                case "Cube Instance":
-                    return PrimitiveType.Cube;
-                case "Capsule Instance":
-                    return PrimitiveType.Capsule;
-                case "Quad Instance":
-                    return PrimitiveType.Quad;
-                case "Sphere Instance":
-                    return PrimitiveType.Sphere;
-                default:
-                    throw new ArgumentException("Unexpected mesh name " + filter.mesh.name, nameof(filter));
-            }
+                "Plane Instance" => PrimitiveType.Plane,
+                "Cylinder Instance" => PrimitiveType.Cylinder,
+                "Cube Instance" => PrimitiveType.Cube,
+                "Capsule Instance" => PrimitiveType.Capsule,
+                "Quad Instance" => PrimitiveType.Quad,
+                "Sphere Instance" => PrimitiveType.Sphere,
+                _ => throw new ArgumentException("Unexpected mesh name " + filter.mesh.name, nameof(filter))
+            };
         }
 
         /// <summary>
@@ -250,7 +243,7 @@ namespace Mistaken.Toy.API
             Exiled.Events.Handlers.Scp079.ChangingCamera -= this.Scp079_ChangingCamera;
         }
 
-        internal static readonly HashSet<AdminToyBase> ManagedToys = new HashSet<AdminToyBase>();
+        internal static readonly HashSet<AdminToyBase> ManagedToys = new();
 
         internal static PrimitiveObjectToy PrimitiveBaseObject
         {
@@ -286,10 +279,9 @@ namespace Mistaken.Toy.API
             }
         }
 
-        private static readonly Dictionary<Room, SynchronizerControllerScript> Controllers =
-            new Dictionary<Room, SynchronizerControllerScript>();
+        private static readonly Dictionary<Room, SynchronizerControllerScript> Controllers = new();
 
-        private static readonly Dictionary<Player, Room> LastRooms = new Dictionary<Player, Room>();
+        private static readonly Dictionary<Player, Room> LastRooms = new();
 
         private static GlobalSynchronizerControllerScript globalController;
 
@@ -355,7 +347,7 @@ namespace Mistaken.Toy.API
         {
             var toy = Object.Instantiate(prefab, parent);
 
-            if (!(movementSmoothing is null))
+            if (movementSmoothing is not null)
                 toy.MovementSmoothing = (byte)movementSmoothing;
             toy.transform.localPosition = Vector3.zero;
             toy.transform.localRotation = Quaternion.identity;
@@ -371,7 +363,7 @@ namespace Mistaken.Toy.API
         {
             var toy = Object.Instantiate(prefab);
 
-            if (!(movementSmoothing is null))
+            if (movementSmoothing is not null)
                 toy.MovementSmoothing = (byte)movementSmoothing;
             toy.transform.position = position;
             toy.transform.rotation = rotation;
@@ -390,7 +382,7 @@ namespace Mistaken.Toy.API
             var script = toy.GetComponent<SynchronizerScript>();
             if (toy is PrimitiveObjectToy)
             {
-                if (!(script.Controller is GlobalSynchronizerControllerScript))
+                if (script.Controller is not GlobalSynchronizerControllerScript)
                 {
                     toy.netIdentity.visible = Visibility.ForceHidden;
                 }
@@ -542,7 +534,7 @@ namespace Mistaken.Toy.API
             {
                 var curRoom = player.GetCurrentRoom();
 
-                if (curRoom is null && player.Position.y > 950 && player.Position.y < 1050)
+                if (curRoom is null && player.Position.y is > 950 and < 1050)
                     curRoom = Room.Get(RoomType.Surface);
 
                 if (LastRooms.TryGetValue(player, out var lastRoom) && lastRoom == curRoom)
@@ -633,7 +625,7 @@ namespace Mistaken.Toy.API
             }
             finally
             {
-                if (!(toSync is null))
+                if (toSync is not null)
                     NorthwoodLib.Pools.HashSetPool<SynchronizerControllerScript>.Shared.Return(toSync);
             }
         }
