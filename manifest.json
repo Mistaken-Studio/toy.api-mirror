@@ -1,0 +1,31 @@
+{
+  "Name": "Toy API",
+  "Author": "Mistaken Devs",
+  "LatestVersion": "2.0.0",
+  "BuildDate": "2022-10-08 21:38:19",
+  "BuildId": "2.0.0-master-00000000",
+  "FileName": "Mistaken.Toy.API.dll",
+  "UpdateUrl": "https://git.mistaken.pl/api/v4/projects/114/packages/generic/plugins/2.0.0/Mistaken.Toy.API.dll",
+  "Dependencies": [
+    {
+      "FileName": "0Harmony.dll",
+      "IsPlugin": false,
+      "DownloadUrl": "https://git.mistaken.pl/api/v4/projects/14/repository/files/0Harmony.dll/raw?ref=master"
+    },
+    {
+      "FileName": "Mistaken.Updater.dll",
+      "IsPlugin": true,
+      "DownloadUrl": "https://git.mistaken.pl/api/v4/projects/8/repository/files/manifest.json/raw?ref=ci-testing"
+    },
+    {
+      "FileName": "0Mistaken.API.dll",
+      "IsPlugin": true,
+      "DownloadUrl": "https://git.mistaken.pl/api/v4/projects/9/repository/files/manifest.json/raw?ref=ci-testing-3"
+    },
+    {
+      "FileName": "Mistaken.RoundLogger.dll",
+      "IsPlugin": true,
+      "DownloadUrl": "https://git.mistaken.pl/api/v4/projects/20/repository/files/manifest.json/raw?ref=ci-testing"
+    }
+  ]
+}
